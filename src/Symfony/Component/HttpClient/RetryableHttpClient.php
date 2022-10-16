@@ -129,7 +129,7 @@ class RetryableHttpClient implements HttpClientInterface, ResetInterface
             $context->pause($delay / 1000);
 
             if ($retryCount >= $this->maxRetries) {
-                $context->passthru();
+                yield from $this->passthru($context, $firstChunk, $content, $chunk);
             }
         });
     }
